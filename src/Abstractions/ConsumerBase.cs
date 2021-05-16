@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace RabbitMQ.Client.Core.Abstractions
 {
+    ///<summary>
+    /// Rabbit MQ Consumer Abstraction Wrapper
+    ///</summary>
     public abstract class ConsumerBase<TConsumer> : BackgroundService where TConsumer : class
     {
         protected ConnectionFactory ConnectionFactory;
@@ -55,12 +58,15 @@ namespace RabbitMQ.Client.Core.Abstractions
             SetupExchangeBindings(_channel, _queueOptions);
         }
 
+        ///<summary>
+        /// Initialize Queue consumption
+        ///</summary>
         public void Initialize()
         {
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnReceived;
-            consumer.Registered += Consumer_Registered;
-            consumer.Unregistered += Consumer_Unregistered;
+            consumer.Registered += ConsumerRegistered;
+            consumer.Unregistered += ConsumerUnregistered;
             _channel.BasicConsume(
                _queueOptions.QueueName,
                _queueOptions.AutoAck,
@@ -69,6 +75,9 @@ namespace RabbitMQ.Client.Core.Abstractions
            _logger.LogDebug($"Consumer {Id} intialized!");
         }
 
+        ///<summary>
+        /// Execute consumption and keeps consumer attached to queue
+        ///</summary>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             this.Initialize();
@@ -78,12 +87,12 @@ namespace RabbitMQ.Client.Core.Abstractions
             }
         }
 
-        private void Consumer_Unregistered(object sender, ConsumerEventArgs e)
+        private void ConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogDebug($"Unregister {Id} -> {e.ConsumerTags.Aggregate((a, b) => $"{a};{b}")}");
         }
 
-        private void Consumer_Registered(object sender, ConsumerEventArgs e)
+        private void ConsumerRegistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogDebug($"Register {Id} -> {e.ConsumerTags.Aggregate((a, b) => $"{a};{b}")}");
         }
@@ -102,7 +111,6 @@ namespace RabbitMQ.Client.Core.Abstractions
         }
 
         public abstract void OnReceived(object sender, Events.BasicDeliverEventArgs e);
-
 
     }
 }
