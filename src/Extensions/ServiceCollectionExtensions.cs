@@ -4,7 +4,6 @@ using RabbitMQ.Client.Core.Abstractions;
 using RabbitMQ.Client.Core.Configurations;
 using RabbitMQ.Client.Core.Interfaces;
 using RabbitMQ.Client.Core.Options;
-using System;
 
 namespace RabbitMQ.Client.Core.Extensions
 {
@@ -13,6 +12,7 @@ namespace RabbitMQ.Client.Core.Extensions
         public static IServiceCollection AddMQExchanges(this IServiceCollection services)
         {
             services.AddSingleton<IExchangesConfigurator, ExchangesConfigurator>();
+            services.BuildServiceProvider().GetRequiredService<IExchangesConfigurator>()?.Setup();
             return services;
         }
 
