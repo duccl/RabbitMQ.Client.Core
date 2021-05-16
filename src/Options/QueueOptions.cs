@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using RabbitMQ.Client.Core.Interfaces;
 
 namespace RabbitMQ.Client.Core.Options
 {
-    public class QueueOptions<TConsumerOrPublisherQueue>
+    public class QueueOptions<TConsumerOrPublisherQueue>: IQueueOptions<TConsumerOrPublisherQueue> where TConsumerOrPublisherQueue: class
     {
         public const string QueueSectionName = "Queue";
         public string QueueName { get; set; }
