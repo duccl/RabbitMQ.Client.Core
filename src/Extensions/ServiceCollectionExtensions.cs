@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client.Core.Abstractions;
 using RabbitMQ.Client.Core.Configurations;
 using RabbitMQ.Client.Core.Interfaces;
 using RabbitMQ.Client.Core.Options;
@@ -15,13 +16,14 @@ namespace RabbitMQ.Client.Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddConsumerQueue<TConsumer>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddConsumerQueue<TConsumer>(this IServiceCollection services, IConfiguration configuration) where TConsumer: class, new()
         {
             services.Configure<QueueOptions<TConsumer>>(
                 configuration.GetSection(
                     typeof(TConsumer).Name
                 ).GetSection(QueueOptions<TConsumer>.QueueSectionName)
             );
+            services.AddHostedService<ConsumerBase<TConsumer>>();
             return services;
         }
 
