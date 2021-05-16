@@ -16,14 +16,21 @@ namespace RabbitMQ.Client.Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddConsumerQueue<TConsumer>(this IServiceCollection services, IConfiguration configuration) where TConsumer: class, new()
+        public static IServiceCollection AddConsumerQueueBindings<TConsumer>(this IServiceCollection services, IConfiguration configuration) where TConsumer: class
         {
             services.Configure<QueueOptions<TConsumer>>(
                 configuration.GetSection(
                     typeof(TConsumer).Name
                 ).GetSection(QueueOptions<TConsumer>.QueueSectionName)
             );
-            services.AddHostedService<ConsumerBase<TConsumer>>();
+            return services;
+        }
+
+        public static IServiceCollection AddConsumerQueue<TConsumer>(this IServiceCollection services, IConfiguration configuration) where TConsumer: ConsumerBase<TConsumer>
+        {
+            services.AddConsumerQueueBindings<TConsumer>(configuration);
+            services.AddSingleton<TConsumer>()
+                .AddHostedService<TConsumer>();
             return services;
         }
 
