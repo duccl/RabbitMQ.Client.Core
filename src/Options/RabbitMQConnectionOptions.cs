@@ -2,6 +2,9 @@
 
 namespace RabbitMQ.Client.Core.Options
 {
+    ///<summary>
+    /// Representation of Rabbit Connection Section named "RabbitMQConnection" in appsetting.json
+    ///</summary>
     public class RabbitMQConnectionOptions: IRabbitMQConnectionOptions
     {
         public const string RabbitMQConnection = "RabbitMQConnection";

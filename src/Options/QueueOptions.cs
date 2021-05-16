@@ -2,7 +2,10 @@
 
 namespace RabbitMQ.Client.Core.Options
 {
-    public class QueueOptions<TConsumerOrPublisherQueue>
+    ///<summary>
+    /// Representation of Queue options section for a consumer (<see cref="RabbitMQ.Client.Core.Abstractions.ConsumerBase" />) or a publisher (<see cref="RabbitMQ.Client.Core.Abstractions.ConsumerBase" />) 
+    ///</summary>
+    public class QueueOptions<TConsumerOrPublisherQueue> where TConsumerOrPublisherQueue: class
     {
         public const string QueueSectionName = "Queue";
         public string QueueName { get; set; }

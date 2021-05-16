@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitMQ.Client.Core.Options
 {
+    ///<summary>
+    /// Representation of Exchange Section at appsettings.json
+    ///</summary>
     public class ExchangeOption: IExchangeOption
     {
         public string ExchangeName { get; set; }
