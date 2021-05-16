@@ -31,30 +31,30 @@ namespace RabbitMQ.Client.Core.Abstractions
             _logger = logger;
         }
 
-        public void Send(byte[] message)
+        public void Send(byte[] message, IBasicProperties properties = null)
         {
-            _logger.LogInformation($"Sending message to exchange {_exchangeBindingOptions.Exchange} " + 
+            _logger.LogDebug($"Sending message to exchange {_exchangeBindingOptions.Exchange} " + 
                                    $"it routing key is {_exchangeBindingOptions.RoutingKey}");
             _channel.BasicPublish(
                 _exchangeBindingOptions.Exchange,
                 _exchangeBindingOptions.RoutingKey,
-                null,
+                properties,
                 body: message
             );
-            _logger.LogInformation($"Message sent from {typeof(TPublisher).Name}");
+            _logger.LogDebug($"Message sent from {typeof(TPublisher).Name}");
         }
         
-        public void Send(byte[] message,string exchange, string routingKey)
+        public void Send(byte[] message,string exchange, string routingKey, IBasicProperties properties = null)
         {
-            _logger.LogInformation($"Sending message to exchange {exchange} " + 
+            _logger.LogDebug($"Sending message to exchange {exchange} " + 
                                    $"it routing key is {routingKey}");
             _channel.BasicPublish(
                 exchange,
                 routingKey,
-                null,
+                properties,
                 body: message
             );
-            _logger.LogInformation($"Message sent from {typeof(TPublisher).Name}");
+            _logger.LogDebug($"Message sent from {typeof(TPublisher).Name}");
         }
 
         public abstract void Send<T>(T messageToSend);
