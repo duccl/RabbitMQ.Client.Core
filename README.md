@@ -132,7 +132,7 @@ After this add it section __with the same name of your class__ to `appsettings.j
 }
 ```
 
-And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges();`, register it exchange configuration binding at `ConfigureServices` and itself.
+And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges()`, register it exchange configuration binding at `ConfigureServices` and itself.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -231,7 +231,7 @@ After this add it section __with the same name of your class__ to `appsettings.j
 
 > The Queue section properties are defined at [`QueueOptions`](src/Options/QueueOptions.cs)
 
-And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges();`, just register it with .
+And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges()`, just register it with .
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -247,7 +247,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-The consumer base class extends from `BackgroundService`, so when the `AddConsumerQueue` it already does the register of the consumer as a `HostedService`.
+The consumer base class extends from `BackgroundService`, so when the `AddConsumerQueue` is called it already does the register of the consumer as a `HostedService`.
 
 If you want to manually do the configuration, the `AddConsumerQueueBindings` needs to be used and also the consumer needs to be registered as `HostedService`. 
 
