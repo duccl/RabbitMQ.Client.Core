@@ -5,6 +5,6 @@ namespace RabbitMQ.Client.Core.Interfaces
 {
     public interface IExchangesOption
     {
-        public IEnumerable<ExchangeOption> Exchanges { get; set; }
+        IEnumerable<ExchangeOption> Exchanges { get; set; }
     }
 }

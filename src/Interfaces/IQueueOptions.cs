@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using RabbitMQ.Client.Core.Options;
 
 namespace RabbitMQ.Client.Core.Interfaces
 {
-    public interface IQueueOptions<TSectionName> where TSectionName: class
+    public interface IQueueOptions<TConsumerOrPublisher> where TConsumerOrPublisher: class
     {
-        public string QueueName { get; set; }
-        public bool Durable { get; set; }
-        public bool Exclusive { get; set; }
-        public bool AutoAck { get; set; }
-        public bool AutoDelete { get; set; }
-        public IDictionary<string,object> Arguments { get; set; }
-        public IEnumerable<IExchangeBindingOptions> Bindings { get; set; }
+        string QueueName { get; set; }
+        bool Durable { get; set; }
+        bool Exclusive { get; set; }
+        bool AutoAck { get; set; }
+        bool AutoDelete { get; set; }
+        IDictionary<string,object> Arguments { get; set; }
+        IEnumerable<ExchangeBindingOptions<TConsumerOrPublisher>> Bindings { get; set; }
     }
 }

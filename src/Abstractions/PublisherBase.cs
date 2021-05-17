@@ -34,7 +34,7 @@ namespace RabbitMQ.Client.Core.Abstractions
             _logger = logger;
         }
 
-        public void Send(byte[] message, IBasicProperties properties = null)
+        public void Send(byte[] message)
         {
             _logger.LogDebug($"Sending message to exchange {_exchangeBindingOptions.Exchange} " + 
                                    $"it routing key is {_exchangeBindingOptions.RoutingKey}");
