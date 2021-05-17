@@ -41,7 +41,7 @@ namespace RabbitMQ.Client.Core.Abstractions
             _channel.BasicPublish(
                 _exchangeBindingOptions.Exchange,
                 _exchangeBindingOptions.RoutingKey,
-                properties,
+                null,
                 body: message
             );
             _logger.LogDebug($"Message sent from {typeof(TPublisher).Name}");
