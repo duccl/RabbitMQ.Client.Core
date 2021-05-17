@@ -3,6 +3,9 @@ using RabbitMQ.Client.Core.Interfaces;
 
 namespace RabbitMQ.Client.Core.Options
 {
+    ///<summary>
+    /// Representation of Queue options section for a consumer (<see cref="RabbitMQ.Client.Core.Abstractions.ConsumerBase" />) or a publisher (<see cref="RabbitMQ.Client.Core.Abstractions.ConsumerBase" />) 
+    ///</summary>
     public class QueueOptions<TConsumerOrPublisherQueue>: IQueueOptions<TConsumerOrPublisherQueue> where TConsumerOrPublisherQueue: class
     {
         public const string QueueSectionName = "Queue";

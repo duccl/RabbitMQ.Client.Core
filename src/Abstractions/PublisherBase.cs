@@ -4,6 +4,9 @@ using RabbitMQ.Client.Core.Options;
 
 namespace RabbitMQ.Client.Core.Abstractions
 {
+    ///<summary>
+    /// Rabbit MQ Publisher Abstraction Wrapper
+    ///</summary>
     public abstract class PublisherBase<TPublisher> where TPublisher : class
     {
         protected ConnectionFactory ConnectionFactory;

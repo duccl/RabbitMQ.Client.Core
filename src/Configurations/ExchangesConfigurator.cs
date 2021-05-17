@@ -5,6 +5,10 @@ using RabbitMQ.Client.Core.Options;
 
 namespace RabbitMQ.Client.Core.Configurations
 {
+    ///<summary>
+    /// This class is responsible for configurate all exchanges defined on appsetting.json
+    /// See <see cref="ExchangesOption">
+    ///</summary>
     public class ExchangesConfigurator: IExchangesConfigurator
     {
         private ConnectionFactory ConnectionFactory;
@@ -28,6 +32,10 @@ namespace RabbitMQ.Client.Core.Configurations
             Setup();
         }
 
+        ///<summary>
+        /// Setup the Exchanges defined at config file
+        /// No need to call it, since <see cref="RabbitMQ.Client.Core.Extensions.ServiceCollectionExtensions.AddMQExchanges(Microsoft.Extensions.DependencyInjection.IServiceCollection)"> extension does
+        ///</summary>
         public void Setup()
         {
             using var connection = ConnectionFactory.CreateConnection();
