@@ -10,7 +10,7 @@
     </Description>
     <PackageProjectUrl>https://github.com/duccl/RabbitMQ.Client.Core.Abstractions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <TargetFrameworks>netcoreapp5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
