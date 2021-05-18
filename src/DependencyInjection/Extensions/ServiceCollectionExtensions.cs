@@ -5,7 +5,7 @@ using RabbitMQ.Client.Core.Configurations;
 using RabbitMQ.Client.Core.Interfaces;
 using RabbitMQ.Client.Core.Options;
 
-namespace RabbitMQ.Client.Core.Extensions
+namespace RabbitMQ.Client.Core.DependencyInjection.Extensions
 {
     public static class ServiceCollectionExtensions
     {
