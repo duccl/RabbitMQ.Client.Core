@@ -1,4 +1,4 @@
-# RabbitMQ.Client.Core.Abstractions
+# RabbitMQ.Client.Core
 .NET Wrappers Abstractions and Dependency Injection for RabbitMQ
 
 # Usage
