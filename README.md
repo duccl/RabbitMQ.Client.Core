@@ -169,7 +169,7 @@ public class Greeter
 
 # Consumer Configuration
 
-Firstly you have to define a publisher class that inherits from [`ConsumerBase`](src/Abstractions/ConsumerBase.cs) like the example below.
+Firstly you have to define a consumer class that inherits from [`ConsumerBase`](src/Abstractions/ConsumerBase.cs) like the example below.
 
 ```csharp
 using Microsoft.Extensions.Logging;
