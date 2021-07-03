@@ -34,49 +34,57 @@ namespace RabbitMQ.Client.Core.DependencyInjection.Extensions
             return services;
         }
 
-        public static IServiceCollection AddSigletonPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAsyncConsumerQueue<TConsumer>(this IServiceCollection services, IConfiguration configuration) where TConsumer : ConsumerAsyncBase<TConsumer>
+        {
+            services.AddConsumerQueueBindings<TConsumer>(configuration);
+            services.AddSingleton<TConsumer>()
+                .AddHostedService<TConsumer>();
+            return services;
+        }
+
+        public static IServiceCollection AddSigletonPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddSingleton(typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddTransientPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddTransientPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddTransient(typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddScopedPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddScopedPublisher<TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddScoped(typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddSigletonPublisher<TIPublisher, TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSigletonPublisher<TIPublisher, TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddSingleton(typeof(TIPublisher), typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddTransientPublisher<TIPublisher,TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddTransientPublisher<TIPublisher,TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddTransient(typeof(TIPublisher), typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddScopedPublisher<TIPublisher,TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddScopedPublisher<TIPublisher,TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.AddPublisherExchange<TPublisher>(configuration);
             services.AddScoped(typeof(TIPublisher), typeof(TPublisher));
             return services;
         }
 
-        public static IServiceCollection AddPublisherExchange<TPublisher>(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPublisherExchange<TPublisher>(this IServiceCollection services, IConfiguration configuration) where TPublisher : PublisherBase<TPublisher>
         {
             services.Configure<ExchangeBindingOptions<TPublisher>>(
                 configuration.GetSection(

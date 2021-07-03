@@ -2,11 +2,10 @@
 
   <PropertyGroup>
     <PackageId>RabbitMQ.Client.Core</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>duccl</Authors>
     <Description>
       .NET Wrappers Abstractions and Dependency Injection for RabbitMQ.
-      For more details, see the documentation at https://github.com/duccl/RabbitMQ.Client.Core.Abstractions/blob/main/README.md
     </Description>
     <PackageProjectUrl>https://github.com/duccl/RabbitMQ.Client.Core.Abstractions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
