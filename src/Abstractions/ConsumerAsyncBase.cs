@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace RabbitMQ.Client.Core.Abstractions
 {
     ///<summary>
-    /// Rabbit MQ Consumer Abstraction Wrapper
+    /// Rabbit MQ Async Consumer Abstraction Wrapper
     ///</summary>
-    public abstract class ConsumerBase<TConsumer> : BackgroundService where TConsumer : class
+    public abstract class ConsumerAsyncBase<TConsumer> : BackgroundService where TConsumer : class
     {
         protected ConnectionFactory ConnectionFactory;
         private readonly IConnection _connection;
@@ -23,9 +23,9 @@ namespace RabbitMQ.Client.Core.Abstractions
         private readonly ILogger<TConsumer> _logger;
         protected string Id;
 
-        public ConsumerBase(
+        public ConsumerAsyncBase(
             IOptions<RabbitMQConnectionOptions> connectionOptions,
-            IOptions<QueueOptions<TConsumer>> queueOptions, 
+            IOptions<QueueOptions<TConsumer>> queueOptions,
             ILogger<TConsumer> logger)
         {
             ConnectionFactory = new ConnectionFactory
@@ -34,7 +34,8 @@ namespace RabbitMQ.Client.Core.Abstractions
                 Port = connectionOptions.Value.Port,
                 UserName = connectionOptions.Value.UserName,
                 Password = connectionOptions.Value.Password,
-                VirtualHost = connectionOptions.Value.VirtualHost
+                VirtualHost = connectionOptions.Value.VirtualHost,
+                DispatchConsumersAsync = true
             };
             _connection = ConnectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
@@ -44,7 +45,6 @@ namespace RabbitMQ.Client.Core.Abstractions
 
             Setup();
         }
-
 
         protected void Setup()
         {
@@ -64,7 +64,7 @@ namespace RabbitMQ.Client.Core.Abstractions
         ///</summary>
         public void Initialize()
         {
-            var consumer = new EventingBasicConsumer(_channel);
+            var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += OnReceived;
             consumer.Registered += ConsumerRegistered;
             consumer.Unregistered += ConsumerUnregistered;
@@ -81,21 +81,23 @@ namespace RabbitMQ.Client.Core.Abstractions
         ///</summary>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            this.Initialize();
+            Initialize();
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(1));
             }
         }
 
-        private void ConsumerUnregistered(object sender, ConsumerEventArgs e)
+        private Task ConsumerUnregistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogDebug($"Unregister {Id} -> {e.ConsumerTags.Aggregate((a, b) => $"{a};{b}")}");
+            return Task.CompletedTask;
         }
 
-        private void ConsumerRegistered(object sender, ConsumerEventArgs e)
+        private Task ConsumerRegistered(object sender, ConsumerEventArgs e)
         {
             _logger.LogDebug($"Register {Id} -> {e.ConsumerTags.Aggregate((a, b) => $"{a};{b}")}");
+            return Task.CompletedTask;
         }
 
         protected void SetupExchangeBindings(IModel channel, QueueOptions<TConsumer> queueOptions)
@@ -111,7 +113,7 @@ namespace RabbitMQ.Client.Core.Abstractions
             }
         }
 
-        public abstract void OnReceived(object sender, Events.BasicDeliverEventArgs e);
+        public abstract Task OnReceived(object sender, BasicDeliverEventArgs e);
 
     }
 }
