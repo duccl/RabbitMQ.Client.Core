@@ -103,7 +103,7 @@ namespace Example.Rabbit
         public Publisher(
             IOptions<RabbitMQConnectionOptions> connectionOptions,
             IOptions<ExchangeBindingOptions<Publisher>> exchangeBindingOptions, 
-            ILogger<PublisherBase<Publisher>> logger) : base(connectionOptions, exchangeBindingOptions, logger)
+            ILogger<Publisher> logger) : base(connectionOptions, exchangeBindingOptions, logger)
         {
         }
 
@@ -169,7 +169,8 @@ public class Greeter
 
 # Consumer Configuration
 
-Firstly you have to define a consumer class that inherits from [`ConsumerBase`](src/Abstractions/ConsumerBase.cs) like the example below.
+Firstly you have to define a consumer class that inherits from [`ConsumerBase`](src/Abstractions/ConsumerBase.cs) or [`ConsumerAsyncBase`](src/Abstractions/ConsumerAsyncBase.cs).
+The first example shows a `ConsumerBase` implementation, and the next a `ConsumerAsyncBase` implementation
 
 ```csharp
 using Microsoft.Extensions.Logging;
@@ -185,7 +186,7 @@ namespace Example.Rabbit
     {
         public Consumer(IOptions<RabbitMQConnectionOptions> connectionOptions,
                         IOptions<QueueOptions<Consumer>> queueOptions, 
-                        ILogger<ConsumerBase<Consumer>> logger) : base(connectionOptions, queueOptions, logger)
+                        ILogger<Consumer> logger) : base(connectionOptions, queueOptions, logger)
         {}
 
         public override void OnReceived(object sender, RabbitMQ.Client.Events.BasicDeliverEventArgs e)
@@ -195,6 +196,33 @@ namespace Example.Rabbit
     }
 }
 ```
+```csharp
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client.Core.Abstractions;
+using RabbitMQ.Client.Core.Options;
+using System.Text;
+using System;
+
+namespace Example.Rabbit
+{
+    public class Consumer : ConsumerAsyncBase<Consumer>
+    {
+        public Consumer(IOptions<RabbitMQConnectionOptions> connectionOptions,
+                        IOptions<QueueOptions<Consumer>> queueOptions,
+                        ILogger<Consumer> logger) : base(connectionOptions, queueOptions, logger)
+        {
+        }
+
+        public override Task OnReceived(object sender, BasicDeliverEventArgs e)
+        {
+            Console.WriteLine(Encoding.Default.GetString(e.Body.ToArray()));
+            return Task.CompletedTask;
+        }
+    }
+}
+```
+
 
 After this add it section __with the same name of your class__ to `appsettings.json` with the properties that you need.
 
