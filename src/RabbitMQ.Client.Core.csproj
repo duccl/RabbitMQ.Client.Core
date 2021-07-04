@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <PackageId>RabbitMQ.Client.Core</PackageId>
     <Version>1.0.1</Version>
     <Authors>duccl</Authors>
-    <Description>
-      .NET Wrappers Abstractions and Dependency Injection for RabbitMQ.
-    </Description>
+    <Description>.NET Wrappers Abstractions and Dependency Injection for RabbitMQ.</Description>
     <PackageProjectUrl>https://github.com/duccl/RabbitMQ.Client.Core.Abstractions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <PackageTags>rabbitmq</PackageTags>
+    <RepositoryUrl>https://github.com/duccl/RabbitMQ.Client.Core</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
