@@ -132,7 +132,7 @@ After this add it section __with the same name of your class__ to `appsettings.j
 }
 ```
 
-And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges()`, register it exchange configuration binding at `ConfigureServices` and itself.
+And then, after the statements `services.AddMQConfigBindindgs(Configuration)` and `services.AddMQExchanges()`, register it using `AddSigletonPublisher` or `AddScopedPublisher` or `AddTransientPublisher`.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -143,7 +143,9 @@ public void ConfigureServices(IServiceCollection services)
     services.AddMQConfigBindindgs(Configuration);
     services.AddMQExchanges();
     services.AddPublisherExchange<Publisher>(Configuration);
-    services.AddSingleton<Publisher>();
+    services.AddSingletonPublisher<SingletonPublisher>();
+    services.AddScopedPublisher<ScopedPublisher>();
+    services.AddTransientPublisher<TransientPublisher>();
 }
 ```
 
