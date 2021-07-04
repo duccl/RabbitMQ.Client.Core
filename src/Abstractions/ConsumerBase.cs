@@ -20,13 +20,13 @@ namespace RabbitMQ.Client.Core.Abstractions
         private readonly IModel _channel;
         private readonly QueueOptions<TConsumer> _queueOptions;
 
-        private readonly ILogger<ConsumerBase<TConsumer>> _logger;
+        private readonly ILogger<TConsumer> _logger;
         protected string Id;
 
         public ConsumerBase(
             IOptions<RabbitMQConnectionOptions> connectionOptions,
             IOptions<QueueOptions<TConsumer>> queueOptions, 
-            ILogger<ConsumerBase<TConsumer>> logger)
+            ILogger<TConsumer> logger)
         {
             ConnectionFactory = new ConnectionFactory
             {
@@ -44,6 +44,7 @@ namespace RabbitMQ.Client.Core.Abstractions
 
             Setup();
         }
+
 
         protected void Setup()
         {

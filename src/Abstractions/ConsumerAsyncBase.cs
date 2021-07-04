@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace RabbitMQ.Client.Core.Abstractions
 {
     ///<summary>
-    /// Rabbit MQ Consumer Abstraction Wrapper
+    /// Rabbit MQ Async Consumer Abstraction Wrapper
     ///</summary>
     public abstract class ConsumerAsyncBase<TConsumer> : BackgroundService where TConsumer : class
     {

@@ -13,12 +13,12 @@ namespace RabbitMQ.Client.Core.Abstractions
         private readonly IConnection _connection;
         private readonly IModel _channel;
         protected readonly ExchangeBindingOptions<TPublisher> _exchangeBindingOptions;
-        private readonly ILogger<PublisherBase<TPublisher>> _logger;
+        private readonly ILogger<TPublisher> _logger;
 
         public PublisherBase(
             IOptions<RabbitMQConnectionOptions> connectionOptions,
             IOptions<ExchangeBindingOptions<TPublisher>> exchangeBindingOptions, 
-            ILogger<PublisherBase<TPublisher>> logger)
+            ILogger<TPublisher> logger)
         {
             ConnectionFactory = new ConnectionFactory
             {
