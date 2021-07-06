@@ -143,6 +143,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddMQConfigBindindgs(Configuration);
     services.AddMQExchanges();
     services.AddPublisherExchange<Publisher>(Configuration);
+    services.AddSingletonPublisher<Publisher>();
     services.AddSingletonPublisher<SingletonPublisher>();
     services.AddScopedPublisher<ScopedPublisher>();
     services.AddTransientPublisher<TransientPublisher>();
